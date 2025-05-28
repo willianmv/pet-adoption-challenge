@@ -41,6 +41,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return String.format("\n-CIDADE: %s\n-RUA: %s\n-NÚMERO DA CASA: %s", city, street, number);
+        return city +", "+street +" ," +number;
     }
 }
