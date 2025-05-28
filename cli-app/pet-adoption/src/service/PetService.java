@@ -4,10 +4,9 @@ import entity.Address;
 import entity.Pet;
 import entity.PetSex;
 import entity.PetType;
-import exception.BusinessException;
-import utils.InputUtils;
+import utils.PetValidator;
 
-import static utils.PetValidator.*;
+import static utils.InputUtils.*;
 
 public class PetService {
 
@@ -17,47 +16,49 @@ public class PetService {
     }
 
     private Pet getPetData() {
-        while (true){
 
-            try{
-                String petName = validatePetStringFields(
-                        InputUtils.readNotEmptyString("--INSIRA O NOME DO PET:"));
+        String petName = readAndValidatedValue(
+                () -> readNotEmptyString("--INSIRA O NOME DO PET:"),
+                PetValidator::validatePetStringFields);
 
-                String petLastName = validatePetStringFields(
-                        InputUtils.readNotEmptyString("--INSIRA O SOBRENOME DO PET:"));
+        String petLastName = readAndValidatedValue(
+                () -> readNotEmptyString("--INSIRA O SOBRENOME DO PET:"),
+                PetValidator::validatePetStringFields);
 
-                PetType type = entity.PetType.fromPortuguese(
-                        InputUtils.readNotEmptyString("--INSIRA O TIPO DO PET (Cachorro ou Gato):"));
+        PetType type = readAndTransformValue(
+                () -> readNotEmptyString("--INSIRA O TIPO DO PET (Cachorro ou Gato):"),
+                PetType::fromPortuguese);
 
-                String breed = validatePetStringFields(
-                        InputUtils.readNotEmptyString("--INSIRA A RAÇA DO PET:"));
+        String breed = readAndValidatedValue(
+                () -> readNotEmptyString("--INSIRA A RAÇA DO PET:"),
+                PetValidator::validatePetStringFields);
 
-                PetSex sex = PetSex.fromPortuguese(
-                        InputUtils.readNotEmptyString("--INSIRA O SEXO DO PET (Masculino ou Feminino):"));
+        PetSex sex = readAndTransformValue(
+                () -> readNotEmptyString("--INSIRA O SEXO DO PET (Masculino ou Feminino):"),
+                PetSex::fromPortuguese);
 
-                String city = validatePetStringFields(
-                        InputUtils.readNotEmptyString("--INSIRA A CIDADE ONDE O PET FOI ENCONTRADO:"));
+        String city = readAndValidatedValue(
+                () -> readNotEmptyString("--INSIRA A CIDADE ONDE O PET FOI ENCONTRADO:"),
+                PetValidator::validatePetStringFields);
 
-                String street = validatePetStringFields(
-                        InputUtils.readNotEmptyString("--INSIRA A RUA ONDE O PET FOI ENCONTRADO:"));
+        String street = readAndValidatedValue(
+                () -> readNotEmptyString("--INSIRA A RUA ONDE O PET FOI ENCONTRADO:"),
+                PetValidator::validatePetStringFields);
 
-                String number = InputUtils.readNotEmptyString("--INSIRA A O NUMERO DA CASA ONDE O PET FOI ENCONTRADO:");
+        String number = readNotEmptyString("--INSIRA A O NUMERO DA CASA ONDE O PET FOI ENCONTRADO:");
 
-                double weight = validateWeight(InputUtils.readDoubleValue("--INSIRA O PESO APROXIMADO DO PET:"));
+        double weight = readAndValidatedValue(
+                () -> readDoubleValue("--INSIRA O PESO APROXIMADO DO PET:"),
+                PetValidator::validateWeight);
 
-                double age = validateAge(InputUtils.readDoubleValue("--INSIRA A IDADE APROXIMADA DO PET:"));
+        double age = readAndValidatedValue(
+                () -> readDoubleValue("--INSIRA A IDADE APROXIMADA DO PET:"),
+                PetValidator::validateAge);
 
-                return new Pet(
-                        petName, petLastName,
-                        type, sex, breed,
-                        new Address(city, number, street),
-                        age, weight);
-
-            }catch (BusinessException ex){
-                System.out.println(ex.getMessage());
-                System.out.println("--POR FAVOR< PREENCHA OS DADOS CORRETAMENTE.\n");
-            }
-
-        }
+        return new Pet(
+                petName, petLastName,
+                type, sex, breed,
+                new Address(city, number, street),
+                age, weight);
     }
 }
