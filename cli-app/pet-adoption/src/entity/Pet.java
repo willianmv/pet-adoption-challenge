@@ -1,13 +1,11 @@
 package entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Pet {
 
-    private String name;
-    private String lastname;
+    private String fullName;
     private PetType type;
     private PetSex sex;
     private String breed;
@@ -19,9 +17,8 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(String name, String lastname, PetType type, PetSex sex, String breed, Address address, Double age, Double weight) {
-        this.name = name;
-        this.lastname = lastname;
+    public Pet(String fullName, PetType type, PetSex sex, String breed, Address address, Double age, Double weight) {
+        this.fullName = fullName;
         this.type = type;
         this.sex = sex;
         this.breed = breed;
@@ -55,20 +52,12 @@ public class Pet {
         this.breed = breed;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public PetSex getSex() {
@@ -113,9 +102,9 @@ public class Pet {
 
     @Override
     public String toString() {
-        return String.format("NOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\n" +
-                        "PESO: %.2f\nENCONTRADO EM: %s\nCADASTRADO EM: %s",
-                name+" "+lastname, type.toString(), sex.toString(), age, weight, address,
+        return String.format("\nNOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\n" +
+                        "PESO: %.2f kg\nENCONTRADO EM: %s\nCADASTRADO EM: %s\n",
+                fullName, type.toString(), sex.toString(), age, weight, address,
                 createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     }
 }
