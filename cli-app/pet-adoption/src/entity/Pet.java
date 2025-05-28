@@ -6,11 +6,24 @@ public class Pet {
     private String lastname;
     private PetType type;
     private PetSex sex;
-    private Address address;
-    private Integer age;
-    private Double weight;
     private String breed;
+    private Address address;
+    private Double age;
+    private Double weight;
 
+    public Pet() {
+    }
+
+    public Pet(String name, String lastname, PetType type, PetSex sex, String breed, Address address, Double age, Double weight) {
+        this.name = name;
+        this.lastname = lastname;
+        this.type = type;
+        this.sex = sex;
+        this.breed = breed;
+        this.address = address;
+        this.age = age;
+        this.weight = weight;
+    }
 
     public Address getAddress() {
         return address;
@@ -20,11 +33,11 @@ public class Pet {
         this.address = address;
     }
 
-    public int getAge() {
+    public double getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(double age) {
         this.age = age;
     }
 
@@ -74,5 +87,11 @@ public class Pet {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("NOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\nPESO: %.2f\nENCONTRADO EM: %s\n",
+                name+" "+lastname, type.toString(), sex.toString(), age, weight, address);
     }
 }
