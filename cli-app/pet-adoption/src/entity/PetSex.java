@@ -3,8 +3,8 @@ package entity;
 import exception.InvalidPetDataException;
 
 public enum PetSex {
-    MALE("masculino"),
-    FEMALE("feminino");
+    MALE("Masculino"),
+    FEMALE("Feminino");
 
     private final String portugueseName;
 
@@ -27,5 +27,10 @@ public enum PetSex {
         }
 
         throw new InvalidPetDataException("Sexo do pet inválido: "+value);
+    }
+
+    @Override
+    public String toString() {
+        return this.portugueseName;
     }
 }

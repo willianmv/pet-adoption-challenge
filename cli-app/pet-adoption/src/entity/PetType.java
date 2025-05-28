@@ -3,8 +3,8 @@ package entity;
 import exception.InvalidPetDataException;
 
 public enum PetType {
-    DOG("cachorro"),
-    CAT("gato");
+    DOG("Cachorro"),
+    CAT("Gato");
 
     private final String portugueseName;
 
@@ -23,5 +23,10 @@ public enum PetType {
         }
 
         throw new InvalidPetDataException("Tipo de pet inválido: "+type);
+    }
+
+    @Override
+    public String toString() {
+        return this.portugueseName;
     }
 }
