@@ -3,6 +3,7 @@ package service;
 import entity.*;
 import utils.PetValidator;
 
+import java.io.IOException;
 import java.util.List;
 
 import static utils.InputUtils.*;
@@ -10,15 +11,24 @@ import static utils.InputUtils.*;
 public class PetService {
 
     private final FormQuestionService formQuestionService;
+    private final PetFileService petFileService;
 
-    public PetService(FormQuestionService formQuestionService) {
+    public PetService(FormQuestionService formQuestionService, PetFileService petFileService) {
         this.formQuestionService = formQuestionService;
+        this.petFileService = petFileService;
     }
 
     public void addPet() {
         List<FormQuestion>  questions = formQuestionService.loadFormQuestions();
         Pet createdPet = getPetData(questions);
-        System.out.println(createdPet);
+        try {
+            petFileService.savePetInFile(createdPet);
+            System.out.println("PET CRIADO!");
+            System.out.println(createdPet);
+            System.out.println("AO ENCERRAR A APLICAÇÃO O PET CRIADO SERÁ SALVO EM: 'app-docs/db'");
+        } catch (IOException ex) {
+            System.out.println("ERRO AO CRIAR ARQUIVO: " + ex.getMessage());
+        }
     }
 
     private Pet getPetData(List<FormQuestion> questions) {

@@ -1,10 +1,15 @@
 package ui;
 
-import java.util.Scanner;
+import service.PetService;
+import utils.InputUtils;
 
 public class Menu {
 
-    private final Scanner sc = new Scanner(System.in);
+    private final PetService petService;
+
+    public Menu(PetService petService) {
+        this.petService = petService;
+    }
 
     public void showPetMenu(){
 
@@ -17,12 +22,11 @@ public class Menu {
                 5. Listar pets por algum critério:
                 6. Sair
                 ===============================================================
+                \n--DIGITE A OPÇÃO DESEJADA:
                 """;
 
         while(true){
-            System.out.println(petMenu);
-            System.out.print("INSIRA A OPÇÃO DESEJADA: ");
-            int op = sc.nextInt();
+            int op = InputUtils.readIntValue(petMenu);
             switch (op){
                 case 1:
                     addNewPet();
@@ -46,10 +50,11 @@ public class Menu {
                     System.out.println("INSIRA UMA OPÇÃO VÁLIDA");
             }
         }
-
     }
 
-    private void addNewPet() {}
+    private void addNewPet() {
+        petService.addPet();
+    }
 
     private void updatePetData() {}
 
