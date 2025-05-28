@@ -16,7 +16,7 @@ public enum PetType {
         String normalizedInput = type.toLowerCase().trim();
 
         for(PetType petType : PetType.values()){
-            if(petType.portugueseName.equals(normalizedInput) ||
+            if(petType.portugueseName.equalsIgnoreCase(normalizedInput) ||
                 petType.name().equalsIgnoreCase(normalizedInput)){
                 return petType;
             }

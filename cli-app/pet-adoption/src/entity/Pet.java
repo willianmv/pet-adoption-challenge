@@ -1,5 +1,9 @@
 package entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Pet {
 
     private String name;
@@ -10,6 +14,7 @@ public class Pet {
     private Address address;
     private Double age;
     private Double weight;
+    private LocalDateTime createdAt;
 
     public Pet() {
     }
@@ -23,6 +28,7 @@ public class Pet {
         this.address = address;
         this.age = age;
         this.weight = weight;
+        this.createdAt = LocalDateTime.now();
     }
 
     public Address getAddress() {
@@ -89,9 +95,27 @@ public class Pet {
         this.weight = weight;
     }
 
+    public void setAge(Double age) {
+        this.age = age;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
-        return String.format("NOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\nPESO: %.2f\nENCONTRADO EM: %s\n",
-                name+" "+lastname, type.toString(), sex.toString(), age, weight, address);
+        return String.format("NOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\n" +
+                        "PESO: %.2f\nENCONTRADO EM: %s\nCADASTRADO EM: %s",
+                name+" "+lastname, type.toString(), sex.toString(), age, weight, address,
+                createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     }
 }

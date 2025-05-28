@@ -21,7 +21,7 @@ public enum PetSex {
 
         for(PetSex sex : PetSex.values()){
             if(sex.name().equalsIgnoreCase(normalizedValue) ||
-                sex.portugueseName.equals(normalizedValue)){
+                sex.portugueseName.equalsIgnoreCase(normalizedValue)){
                 return sex;
             }
         }
