@@ -1,11 +1,11 @@
 package entity;
 
-public class FormQuestion {
+public class Question {
 
     private int number;
     private String text;
 
-    public FormQuestion(int number, String text) {
+    public Question(int number, String text) {
         this.number = number;
         this.text = text;
     }

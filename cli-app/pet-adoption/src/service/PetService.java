@@ -1,9 +1,10 @@
 package service;
 
 import entity.*;
-import utils.PetValidator;
+import utils.PetValidatorUtils;
+import dao.PetDAO;
+import dao.QuestionDAO;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,36 +12,37 @@ import static utils.InputUtils.*;
 
 public class PetService {
 
-    private final FormQuestionService formQuestionService;
-    private final PetFileService petFileService;
+    private final QuestionDAO questionFileDAO;
+    private final PetDAO petFileDAO;
+    private final String loadQuestionFile;
+    private final String petDataBaseFile;
 
-    public PetService(FormQuestionService formQuestionService, PetFileService petFileService) {
-        this.formQuestionService = formQuestionService;
-        this.petFileService = petFileService;
+    public PetService(QuestionDAO questionFileDAO, String loadQuestionFile,
+                      PetDAO petFileDAO, String petDataBaseFile) {
+
+        this.questionFileDAO = questionFileDAO;
+        this.petFileDAO = petFileDAO;
+        this.loadQuestionFile = loadQuestionFile;
+        this.petDataBaseFile = petDataBaseFile;
     }
 
     public Pet addPet() {
-        List<FormQuestion>  questions = formQuestionService.loadFormQuestions();
+        List<Question>  questions = questionFileDAO.loadFromFile(loadQuestionFile);
         Pet createdPet = getPetData(questions);
         createdPet.setCreatedAt(LocalDateTime.now());
-        try {
-            petFileService.savePetInFile(createdPet);
-            return createdPet;
-        } catch (IOException ex) {
-            System.out.println("ERRO AO CRIAR ARQUIVO: " + ex.getMessage());
-            return null;
-        }
+        petFileDAO.saveFile(createdPet, petDataBaseFile);
+        return createdPet;
     }
 
     public List<Pet> getAllPets() {
-        return petFileService.loadPetsFromDirectory();
+        return petFileDAO.loadFromFile(petDataBaseFile);
     }
 
-    private Pet getPetData(List<FormQuestion> questions) {
+    private Pet getPetData(List<Question> questions) {
 
         String petFullName = readAndValidatedValue(
                 () -> readNotEmptyString(questions.getFirst().getNumber()+" - "+questions.getFirst().getText()),
-                PetValidator::validatePetFullName);
+                PetValidatorUtils::validatePetFullName);
 
         PetType type = readAndTransformValue(
                 () -> readNotEmptyString(questions.get(1).getNumber()+" - "+questions.get(1).getText()),
@@ -53,25 +55,25 @@ public class PetService {
         System.out.println(questions.get(3).getNumber()+" - "+questions.get(3).getText());
         String city = readAndValidatedValue(
                 () -> readNotEmptyString("--(CIDADE)"),
-                PetValidator::validatePetStringFields);
+                PetValidatorUtils::validatePetStringFields);
 
         String street = readAndValidatedValue(
                 () -> readNotEmptyString("--(RUA)"),
-                PetValidator::validatePetStringFields);
+                PetValidatorUtils::validatePetStringFields);
 
         String number = readNotEmptyString("--(NUMERO DA CASA)");
 
         double age = readAndValidatedValue(
                 () -> readDoubleValue(questions.get(4).getNumber()+" - "+questions.get(4).getText()),
-                PetValidator::validateAge);
+                PetValidatorUtils::validateAge);
 
         double weight = readAndValidatedValue(
                 () -> readDoubleValue(questions.get(5).getNumber()+" - "+questions.get(5).getText()),
-                PetValidator::validateWeight);
+                PetValidatorUtils::validateWeight);
 
         String breed = readAndValidatedValue(
                 () -> readNotEmptyString(questions.get(6).getNumber()+" - "+questions.get(6).getText()),
-                PetValidator::validatePetStringFields);
+                PetValidatorUtils::validatePetStringFields);
 
         return new Pet(
                 petFullName,

@@ -2,7 +2,7 @@ package utils;
 
 import exception.InvalidPetDataException;
 
-public class PetValidator {
+public class PetValidatorUtils {
 
     public static String validatePetFullName(String fullName) {
         if (!fullName.matches("^[A-Za-zÀ-ÿ\\s]+$")) {

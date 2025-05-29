@@ -1,14 +1,19 @@
-import service.FormQuestionService;
-import service.PetFileService;
+import dao.QuestionDAO;
+import dao.PetDAO;
 import service.PetService;
 import ui.Menu;
 
 public class App {
 
     public static void main(String[] args) {
-        FormQuestionService formQuestionService = new FormQuestionService("app-docs/forms/formulario.txt");
-        PetFileService petFileService = new PetFileService("app-docs/db");
-        PetService petService = new PetService(formQuestionService, petFileService);
+
+        QuestionDAO questionFileDAO = new QuestionDAO();
+        PetDAO petFileDAO = new PetDAO();
+
+        PetService petService = new PetService(
+                questionFileDAO, "app-docs/forms/formulario.txt",
+                petFileDAO, "app-docs/db");
+
         Menu menu = new Menu(petService);
         menu.showPetMenu();
     }

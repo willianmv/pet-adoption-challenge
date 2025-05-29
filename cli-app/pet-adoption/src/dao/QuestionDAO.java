@@ -1,22 +1,20 @@
-package service;
+package dao;
 
-import entity.FormQuestion;
+import entity.Question;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormQuestionService {
+public class QuestionDAO implements IFileDAO<Question> {
 
-    private final String filePath;
+    @Override
+    public void saveFile(Question element, String directoryPath){}
 
-    public FormQuestionService(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public List<FormQuestion> loadFormQuestions(){
-        List<FormQuestion> formQuestions = new ArrayList<>();
+    @Override
+    public List<Question> loadFromFile(String filePath) {
+        List<Question> questions = new ArrayList<>();
 
         try(BufferedReader bf = new BufferedReader(new FileReader(filePath))){
             String linha;
@@ -26,13 +24,14 @@ public class FormQuestionService {
                 if(parts.length == 2){
                     int number = Integer.parseInt(parts[0].trim());
                     String text = parts[1].trim();
-                    formQuestions.add(new FormQuestion(number, text));
+                    questions.add(new Question(number, text));
                 }
             }
 
         } catch (Exception ex) {
             System.out.println("--ERRO: "+ ex);
         }
-        return formQuestions;
+        return questions;
     }
+
 }
