@@ -1,7 +1,0 @@
-1 - Luna da Costa
-2 - Cachorro
-3 - Feminino
-4 - Belo Horizonte, Avenida Amazonas ,1020
-5 - 3.5
-6 - 12.2
-7 - SRD

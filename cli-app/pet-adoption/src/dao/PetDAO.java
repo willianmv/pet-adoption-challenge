@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class PetDAO implements IFileDAO<Pet> {
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
             int linha = 1;
+            writer.write("ID - " + element.getId());writer.newLine();
+            writer.write("DATA CADASTRO - " + element.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+            writer.newLine();
             writer.write(linha++ +" - "+ element.getFullName());writer.newLine();
             writer.write(linha++ +" - "+ element.getType().toString());writer.newLine();
             writer.write(linha++ +" - "+ element.getSex().toString());writer.newLine();
@@ -74,18 +78,20 @@ public class PetDAO implements IFileDAO<Pet> {
     }
 
     private Pet parsePetFromFileLines(List<String> lines){
-        String fullName = lines.getFirst().split(" - ")[1].trim();
-        PetType type = PetType.fromPortuguese(lines.get(1).split(" - ")[1].trim());
-        PetSex sex = PetSex.fromPortuguese(lines.get(2).split(" - ")[1].trim());
-        String fullAddress = lines.get(3).split(" - ")[1].trim();
-        double age = Double.parseDouble(lines.get(4).split(" - ")[1].trim());
-        double weight = Double.parseDouble(lines.get(5).split(" - ")[1].trim());
-        String breed = lines.get(6).split(" - ")[1].trim();
+        int id = Integer.parseInt(lines.getFirst().split(" - ")[1].trim());
+        LocalDateTime createdAt = LocalDateTime.parse(lines.get(1).split(" - ")[1].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        String fullName = lines.get(2).split(" - ")[1].trim();
+        PetType type = PetType.fromPortuguese(lines.get(3).split(" - ")[1].trim());
+        PetSex sex = PetSex.fromPortuguese(lines.get(4).split(" - ")[1].trim());
+        String fullAddress = lines.get(5).split(" - ")[1].trim();
+        double age = Double.parseDouble(lines.get(6).split(" - ")[1].trim());
+        double weight = Double.parseDouble(lines.get(7).split(" - ")[1].trim());
+        String breed = lines.get(8).split(" - ")[1].trim();
 
         Address address = new Address();
         address.setFullAddress(fullAddress);
 
-        return new Pet(fullName, type, sex, breed, address, age, weight);
+        return new Pet(id, fullName, type, sex, breed, address, age, weight, createdAt);
     }
 
 }

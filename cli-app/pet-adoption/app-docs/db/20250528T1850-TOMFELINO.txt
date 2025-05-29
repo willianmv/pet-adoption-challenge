@@ -1,7 +1,0 @@
-1 - Tom Felino
-2 - Gato
-3 - Masculino
-4 - São Paulo, Rua da Liberdade, 45
-5 - 1.0
-6 - 4.0
-7 - Siamês

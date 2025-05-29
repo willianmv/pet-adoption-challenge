@@ -25,7 +25,7 @@ public class Menu {
                 5. Deletar um pet cadastrado
                 6. Sair
                 ===============================================================
-                \n--DIGITE A OPÇÃO DESEJADA:
+                --DIGITE A OPÇÃO DESEJADA:
                 """;
 
         while(true){
@@ -68,7 +68,10 @@ public class Menu {
         if(!pets.isEmpty()) pets.forEach(System.out::println);
     }
 
-    private void listByFilters() {}
+    private void listByFilters() {
+        List<Pet> pets = petService.getPetsByFilters();
+        if(!pets.isEmpty()) pets.forEach(System.out::println);
+    }
 
     private void updatePetData() {}
 

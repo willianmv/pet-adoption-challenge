@@ -4,6 +4,9 @@ out/
 !**/src/test/**/out/
 .idea/
 
+## Data Base Files ##
+app-docs/db
+
 ### Eclipse ###
 .apt_generated
 .classpath

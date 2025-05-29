@@ -1,7 +1,0 @@
-1 - Rex Valente
-2 - Cachorro
-3 - Masculino
-4 - Curituba, Rua das Araucárias, 224
-5 - 5.0
-6 - 25.4
-7 - Labrador

@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Pet {
 
+    private static int idCount = 0;
+    private int id;
     private String fullName;
     private PetType type;
     private PetSex sex;
@@ -25,6 +27,21 @@ public class Pet {
         this.address = address;
         this.age = age;
         this.weight = weight;
+        this.id = ++idCount;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Pet(int id, String fullName, PetType type, PetSex sex, String breed, Address address, Double age, Double weight, LocalDateTime createdAt) {
+        this.id = id;
+        this.fullName = fullName;
+        this.type = type;
+        this.sex = sex;
+        this.breed = breed;
+        this.address = address;
+        this.age = age;
+        this.weight = weight;
+        if(id > idCount) idCount = id;
+        this.createdAt = createdAt;
     }
 
     public Address getAddress() {
@@ -99,9 +116,18 @@ public class Pet {
         this.createdAt = createdAt;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return String.format("\nNOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nRAÇA: %s\nIDADE: %.2f\nPESO: %.2f kg\nENCONTRADO EM: %s\n",
+        return String.format("\nID: %d\nDATA CADASTRO: %s\nNOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nRAÇA: %s\nIDADE: %.2f\nPESO: %.2f kg\nENCONTRADO EM: %s\n",
+                id, createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                 fullName, type.toString(), sex.toString(), breed, age, weight, address);
     }
 }
