@@ -41,6 +41,12 @@ public class Address {
 
     @Override
     public String toString() {
-        return city +", "+street +" ," +number;
+        return city +", "+street +", " +number;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.city = fullAddress.split(",")[0].trim();
+        this.street = fullAddress.split(",")[1].trim();
+        this.number = fullAddress.split(",")[2].trim();
     }
 }
