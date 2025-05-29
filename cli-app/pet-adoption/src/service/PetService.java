@@ -4,6 +4,7 @@ import entity.*;
 import utils.PetValidator;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static utils.InputUtils.*;
@@ -18,17 +19,21 @@ public class PetService {
         this.petFileService = petFileService;
     }
 
-    public void addPet() {
+    public Pet addPet() {
         List<FormQuestion>  questions = formQuestionService.loadFormQuestions();
         Pet createdPet = getPetData(questions);
+        createdPet.setCreatedAt(LocalDateTime.now());
         try {
             petFileService.savePetInFile(createdPet);
-            System.out.println("PET CRIADO!");
-            System.out.println(createdPet);
-            System.out.println("AO ENCERRAR A APLICAÇÃO O PET CRIADO SERÁ SALVO EM: 'app-docs/db'");
+            return createdPet;
         } catch (IOException ex) {
             System.out.println("ERRO AO CRIAR ARQUIVO: " + ex.getMessage());
+            return null;
         }
+    }
+
+    public List<Pet> getAllPets() {
+        return petFileService.loadPetsFromDirectory();
     }
 
     private Pet getPetData(List<FormQuestion> questions) {

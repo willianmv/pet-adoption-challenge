@@ -1,7 +1,10 @@
 package ui;
 
+import entity.Pet;
 import service.PetService;
 import utils.InputUtils;
+
+import java.util.List;
 
 public class Menu {
 
@@ -16,10 +19,10 @@ public class Menu {
         String petMenu = """
                 ======================== PET MENU =============================
                 1. Cadastrar um novo pet
-                2. Alterar os dados do pet cadastrado
-                3. Deletar um pet cadastrado
-                4. Listar todos os pets cadastrados
-                5. Listar pets por algum critério:
+                2. Listar todos os pets cadastrados
+                3. Listar pets por algum critério
+                4. Alterar os dados do pet cadastrado
+                5. Deletar um pet cadastrado
                 6. Sair
                 ===============================================================
                 \n--DIGITE A OPÇÃO DESEJADA:
@@ -32,16 +35,16 @@ public class Menu {
                     addNewPet();
                     break;
                 case 2:
-                    updatePetData();
-                    break;
-                case 3:
-                    deletePet();
-                    break;
-                case 4:
                     listPets();
                     break;
-                case 5:
+                case 3:
                     listByFilters();
+                    break;
+                case 4:
+                    updatePetData();
+                    break;
+                case 5:
+                    deletePet();
                     break;
                 case 6:
                     System.out.println("ENCERRANDO...");
@@ -53,15 +56,22 @@ public class Menu {
     }
 
     private void addNewPet() {
-        petService.addPet();
+        Pet pet = petService.addPet();
+        if(pet != null){
+            System.out.println("PET FOI CADASTRADO");
+            System.out.println(pet);
+        }
     }
+
+    private void listPets() {
+        List<Pet> pets = petService.getAllPets();
+        if(!pets.isEmpty()) pets.forEach(System.out::println);
+    }
+
+    private void listByFilters() {}
 
     private void updatePetData() {}
 
     private void deletePet() {}
-
-    private void listPets() {}
-
-    private void listByFilters() {}
 
 }
