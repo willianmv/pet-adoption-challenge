@@ -1,0 +1,7 @@
+1 - Meg Pastor
+2 - Cachorro
+3 - Feminino
+4 - Porto Alegre, Rua São João, 890
+5 - 8.0
+6 - 30.5
+7 - Pastor Alemão

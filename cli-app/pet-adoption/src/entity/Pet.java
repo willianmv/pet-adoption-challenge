@@ -25,7 +25,6 @@ public class Pet {
         this.address = address;
         this.age = age;
         this.weight = weight;
-        this.createdAt = LocalDateTime.now();
     }
 
     public Address getAddress() {
@@ -102,9 +101,7 @@ public class Pet {
 
     @Override
     public String toString() {
-        return String.format("\nNOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nIDADE: %.2f\n" +
-                        "PESO: %.2f kg\nENCONTRADO EM: %s\nCADASTRADO EM: %s\n",
-                fullName, type.toString(), sex.toString(), age, weight, address,
-                createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        return String.format("\nNOME COMPLETO: %s\nTIPO: %s\nSEXO: %s\nRAÇA: %s\nIDADE: %.2f\nPESO: %.2f kg\nENCONTRADO EM: %s\n",
+                fullName, type.toString(), sex.toString(), breed, age, weight, address);
     }
 }
